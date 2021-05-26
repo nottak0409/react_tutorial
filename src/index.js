@@ -77,9 +77,13 @@ class Game extends React.Component {
     }
 
     jumpTo(step) {
+        const new_col = this.state.col.slice(0, step);
+        const new_row = this.state.row.slice(0, step);
         this.setState({
             stepNumber: step,
             xIsNext: (step % 2) === 0,
+            col: new_col,
+            row: new_row,
         })
     }
 
@@ -91,7 +95,6 @@ class Game extends React.Component {
         const row = this.state.row;
 
         const moves = history.map((step,move) => {
-            console.log(move)
             const desc = move ?
                 "Go to move #" + move  + " row:" + row[move - 1] + " col:" + col[move - 1]:
                 "Go to game start" ;
