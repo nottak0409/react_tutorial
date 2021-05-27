@@ -104,6 +104,8 @@ class Game extends React.Component {
         });
         let status;
         if(winner) {
+            console.log(winner)
+            console.log(current.squares)
             status = 'Winner:' + winner;
         } else {
             status = 'Next player: ' + (this.state.xIsNext ? "X" : "O");
@@ -138,7 +140,7 @@ function calculateWinner(squares) {
     ];
     for (let i = 0; i < lines.length; i++) {
         const [a, b, c] = lines[i];
-        if(squares[a] && squares[a] === squares[b] && squares[c]) {
+        if(squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
             return squares[a];
         }
     }
