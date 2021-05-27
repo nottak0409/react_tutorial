@@ -103,9 +103,9 @@ class Game extends React.Component {
             );
         });
         let status;
-        if(winner) {
-            console.log(winner)
-            console.log(current.squares)
+        if(history.length >= 10) {
+            status = "引き分けです";
+        } else if(winner) {
             status = 'Winner:' + winner;
         } else {
             status = 'Next player: ' + (this.state.xIsNext ? "X" : "O");
