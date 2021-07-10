@@ -1,9 +1,11 @@
-import { combineReducer } from "redux";
+import { combineReducers } from "redux";
 import { CLICK_SQUARE, JUMP_TO_PAST } from "./actions";
 
 const initialState = {
     history: [
-        squares: Array(9).fill(null)
+        {
+            squares: Array(9).fill(null)
+        }
     ],
     stepNumber: 0,
     xIsNext: true,
@@ -19,7 +21,7 @@ function game(state = initialState, action) {
         const squares = current.squares.slice();
         const new_col = this.state.col.slice(0, this.state.stepNumber);
         const new_row = this.state.row.slice(0, this.state.stepNumber);
-        if(calculateWinner(squares) || squares[i]) {
+        if(calculateWinner(squares) || squares[action.index]) {
             return state;
         }
         squares[action.index] = this.state.xIsNext ? 'X' : 'O';
@@ -29,8 +31,8 @@ function game(state = initialState, action) {
             }]),
             stepNumber: history.length,
             xIsNext: !this.state.xIsNext,
-            col: new_col.concat(Math.floor(i / 3) + 1),
-            row: new_row.concat(i % 3 + 1 ),
+            col: new_col.concat(Math.floor(action.index / 3) + 1),
+            row: new_row.concat(action.index % 3 + 1 ),
         };
 
         case JUMP_TO_PAST:
@@ -44,7 +46,7 @@ function game(state = initialState, action) {
     }
 }
 
-export const app = combineReducer({ game });
+export const app = combineReducers({ game });
 
 function calculateWinner(squares) {
     const lines = [
