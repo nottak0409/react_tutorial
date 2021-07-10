@@ -44,53 +44,12 @@ class Board extends React.Component {
 }
 
 export class Game extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            history: [{
-                squares: Array(9).fill(null),
-            }],
-            stepNumber: 0,
-            xIsNext: true,
-            row:[],
-            col:[],
-        }
-    }
-
-    handleClick(i) {
-        const history = this.state.history.slice(0, this.state.stepNumber + 1);
-        const current = history[history.length - 1];
-        const squares = current.squares.slice();
-        const new_col = this.state.col.slice(0, this.state.stepNumber);
-        const new_row = this.state.row.slice(0, this.state.stepNumber);
-        if(calculateWinner(squares) || squares[i]) {
-            return;
-        }
-        squares[i] = this.state.xIsNext ? 'X' : 'O';
-        this.setState({
-            history: history.concat([{
-                squares: squares,
-            }]),
-            stepNumber: history.length,
-            xIsNext: !this.state.xIsNext,
-            col: new_col.concat(Math.floor(i / 3) + 1),
-            row: new_row.concat(i % 3 + 1 ),
-        })
-    }
-
-    jumpTo(step) {
-        this.setState({
-            stepNumber: step,
-            xIsNext: (step % 2) === 0,
-        })
-    }
-
     render() {
-        const history = this.state.history;
-        const current = history[this.state.stepNumber];
+        const history = this.props.history;
+        const current = history[this.props.stepNumber];
         const winner = calculateWinner(current.squares);
-        const col = this.state.col;
-        const row = this.state.row;
+        const col = this.props.col;
+        const row = this.props.row;
 
         const moves = history.map((step,move) => {
             const desc = move ?
@@ -108,14 +67,14 @@ export class Game extends React.Component {
         } else if(winner) {
             status = 'Winner:' + winner;
         } else {
-            status = 'Next player: ' + (this.state.xIsNext ? "X" : "O");
+            status = 'Next player: ' + (this.props.xIsNext ? "X" : "O");
         }
         return (
             <div className="game">
             <div className="game-board">
             <Board
                 squares = {current.squares}
-                onClick = {(i) => this.handleClick(i)}
+                onClick = {i => this.props.handleClick(i)}
             />
             </div>
             <div className="game-info">

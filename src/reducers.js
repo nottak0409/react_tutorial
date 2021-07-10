@@ -16,21 +16,21 @@ const initialState = {
 function game(state = initialState, action) {
     switch(action.type) {
         case CLICK_SQUARE:
-        const history = this.state.history.slice(0, this.state.stepNumber + 1);
+        const history = state.history.slice(0, state.stepNumber + 1);
         const current = history[history.length - 1];
         const squares = current.squares.slice();
-        const new_col = this.state.col.slice(0, this.state.stepNumber);
-        const new_row = this.state.row.slice(0, this.state.stepNumber);
+        const new_col = state.col.slice(0, state.stepNumber);
+        const new_row = state.row.slice(0, state.stepNumber);
         if(calculateWinner(squares) || squares[action.index]) {
             return state;
         }
-        squares[action.index] = this.state.xIsNext ? 'X' : 'O';
+        squares[action.index] = state.xIsNext ? 'X' : 'O';
         return {
             history: history.concat([{
                 squares: squares,
             }]),
             stepNumber: history.length,
-            xIsNext: !this.state.xIsNext,
+            xIsNext: !state.xIsNext,
             col: new_col.concat(Math.floor(action.index / 3) + 1),
             row: new_row.concat(action.index % 3 + 1 ),
         };
