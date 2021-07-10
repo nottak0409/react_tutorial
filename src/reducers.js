@@ -34,7 +34,11 @@ function game(state = initialState, action) {
         };
 
         case JUMP_TO_PAST:
-            return state;
+            return {
+                ...state,
+                stepNumber: action.step,
+                xIsNext: (action.step % 2) === 0,
+            }
         default:
             return state;
     }
