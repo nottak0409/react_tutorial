@@ -11,7 +11,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         handleClick: index => {
             dispatch(clickSquare(index));
         },
-        jumpTo: () => {}
+        jumpTo: step => {
+            dispatch(jumpToPast(step))
+        }
     };
 };
 
