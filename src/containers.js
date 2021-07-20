@@ -6,6 +6,7 @@ const mapStateToProps = (state, ownProps) => {
     return state.game;
 };
 
+
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         handleClick: index => {
