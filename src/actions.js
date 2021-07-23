@@ -12,6 +12,6 @@ export function jumpToPast(payload) {
 
 export const GET_HISTORY = "GET_HISTORY";
 
-export function getHistory(payload) = {
+export function getHistory(payload) {
     return { type: GET_HISTORY, payload}
 }
