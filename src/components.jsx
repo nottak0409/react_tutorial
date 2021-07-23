@@ -1,9 +1,6 @@
 import React from 'react';
-import {
-    CLICK_SQUARE,
-    JUMP_TO_PAST,
-    GET_HISTORY
-} from "./actions";
+import { app, game } from "./reducers";
+import { GET_HISTORY } from './actions'
 import { useSelector, useDispatch } from 'react-redux'
 import './index.css';
 
@@ -49,8 +46,8 @@ class Board extends React.Component {
 }
 
 export function Game() {
-    const history = useSelector((state) => GET_HISTORY);
-    console.log(history);
+    const history = useSelector((app) => GET_HISTORY);
+    console.log(useSelector((app) => GET_HISTORY));
     const current = history[this.props.stepNumber];
     const winner = calculateWinner(current.squares);
     const col = this.props.col;

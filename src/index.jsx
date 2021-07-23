@@ -12,6 +12,7 @@ const store = configureStore({
         app: app
     }
 });
+
 ReactDOM.render(
     <Provider store={store}>
         <GameContainer />
