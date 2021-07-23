@@ -1,5 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import {
+    CLICK_SQUARE,
+    JUMP_TO_PAST,
+    GET_HISTORY
+} from "./actions";
+import { useSelector, useDispatch } from 'react-redux'
 import './index.css';
 
 function Square(props) {
@@ -43,47 +48,46 @@ class Board extends React.Component {
     }
 }
 
-export class Game extends React.Component {
-    render() {
-        const history = this.props.history;
-        const current = history[this.props.stepNumber];
-        const winner = calculateWinner(current.squares);
-        const col = this.props.col;
-        const row = this.props.row;
+export function Game() {
+    const history = useSelector((state) => GET_HISTORY);
+    console.log(history);
+    const current = history[this.props.stepNumber];
+    const winner = calculateWinner(current.squares);
+    const col = this.props.col;
+    const row = this.props.row;
 
-        const moves = history.map((step,move) => {
-            const desc = move ?
-                "Go to move #" + move  + " 横:" + row[move - 1] + " 縦:" + col[move - 1]:
-                "Go to game start" ;
-            return (
-                <li key={move}>
-                    <button onClick={() => this.props.jumpTo(move)}>{desc}</button>
-                </li>
-            );
-        });
-        let status;
-        if(history.length >= 10) {
-            status = "引き分けです";
-        } else if(winner) {
-            status = 'Winner:' + winner;
-        } else {
-            status = 'Next player: ' + (this.props.xIsNext ? "X" : "O");
-        }
+    const moves = history.map((step,move) => {
+        const desc = move ?
+            "Go to move #" + move  + " 横:" + row[move - 1] + " 縦:" + col[move - 1]:
+            "Go to game start" ;
         return (
-            <div className="game">
-            <div className="game-board">
-            <Board
-                squares = {current.squares}
-                onClick = {i => this.props.handleClick(i)}
-            />
-            </div>
-            <div className="game-info">
-            <div>{status}</div>
-            <ol>{moves}</ol>
-            </div>
-            </div>
+            <li key={move}>
+                <button onClick={() => this.props.jumpTo(move)}>{desc}</button>
+            </li>
         );
+    });
+    let status;
+    if(history.length >= 10) {
+        status = "引き分けです";
+    } else if(winner) {
+        status = 'Winner:' + winner;
+    } else {
+        status = 'Next player: ' + (this.props.xIsNext ? "X" : "O");
     }
+    return (
+        <div className="game">
+        <div className="game-board">
+        <Board
+            squares = {current.squares}
+            onClick = {i => this.props.handleClick(i)}
+        />
+        </div>
+        <div className="game-info">
+        <div>{status}</div>
+        <ol>{moves}</ol>
+        </div>
+        </div>
+    );
 }
 
 function calculateWinner(squares) {
