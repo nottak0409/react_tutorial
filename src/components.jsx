@@ -47,7 +47,7 @@ class Board extends React.Component {
 
 export function Game() {
     const history = useSelector((app) => GET_HISTORY);
-    console.log(useSelector((app) => GET_HISTORY));
+    console.log(app);
     const current = history[this.props.stepNumber];
     const winner = calculateWinner(current.squares);
     const col = this.props.col;
